@@ -26,7 +26,6 @@ const AddUserPayload = new GraphQLObjectType({
   name: "AddUserPayload",
   fields: () => ({
     HasError: { type: GraphQLBoolean },
-    Field: { type: GraphQLString },
     Msg: { type: GraphQLString }
   })
 });
@@ -145,7 +144,6 @@ const mutation = new GraphQLObjectType({
         if (args.name === null || args.name === "") {
           return {
             HasError: true,
-            Field: "Name",
             Msg: "Name argument cannot be empty."
           };
         }
@@ -153,7 +151,6 @@ const mutation = new GraphQLObjectType({
         if (args.email === null || args.email === "") {
           return {
             HasError: true,
-            Field: "Email",
             Msg: "Name argument cannot be empty."
           };
         }
@@ -161,16 +158,15 @@ const mutation = new GraphQLObjectType({
         if (validator.isEmail(args.email) === false) {
           return {
             HasError: true,
-            Field: "Email",
             Msg: "Email argument is not an email."
           };
         }
 
         const { user } = await addUser(args.name, args.email);
         if (user !== null) {
-          return { HasError: false, Field: "", Msg: "" };
+          return { HasError: false, Msg: "" };
         } else {
-          return { HasError: true, Field: "Unknown", Msg: "Server Error!" };
+          return { HasError: true, Msg: "Server Error!" };
         }
       }
     }

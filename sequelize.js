@@ -44,12 +44,14 @@ const User = sequelize.define(
       unique: true
     },
     CreatedAt: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.NOW
     },
     UpdatedAt: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.NOW
     }
   },
   {

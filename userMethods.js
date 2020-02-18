@@ -25,14 +25,14 @@ async function getUsers() {
 async function addUser(name, email) {
   try {
     const newId = uuid();
-    // add user
-    await User.create({
-      Id: newId,
-      Name: name,
-      Email: email,
-      CreatedAt: getUtcNow(),
-      UpdatedAt: getUtcNow()
-    });
+
+    // run raw query
+    await sequelize.query(
+      "INSERT INTO dbo.[Users] (Id, Name, Email) VALUES (:id, :name, :email)",
+      {
+        replacements: { id: newId, name, email, type: sequelize.INSERT }
+      }
+    );
 
     // find the user in the db
     const users = await User.findAll({
@@ -50,6 +50,7 @@ async function addUser(name, email) {
       };
     }
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       msg: `Failed to create user.  Reason: ${error}`,
