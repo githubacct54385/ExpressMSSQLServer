@@ -10,13 +10,11 @@ const app = express();
 // test the db connection
 connectDb();
 
-console.log(process.env.NODE_ENV);
-
 app.use(
   "/graphql",
   expressGraphQL({
     schema,
-    graphiql: process.env.NODE_ENV !== undefined ? false : true
+    graphiql: process.env.NODE_ENV === "production" ? false : true
   })
 );
 
