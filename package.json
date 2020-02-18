@@ -15,7 +15,6 @@
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "moment": "^2.24.0",
-    "msnodesqlv8": "^0.8.7",
     "sequelize": "^5.21.4",
     "tedious": "^8.0.1",
     "uuidv4": "^6.0.2"
