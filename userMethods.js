@@ -35,22 +35,9 @@ async function addUser(name, email) {
     );
 
     // find the user in the db
-    const users = await User.findAll({
-      attributes: ["Id", "Name", "Email", "CreatedAt", "UpdatedAt"],
-      where: { Id: newId }
-    });
-
-    if (users.length === 1) {
-      return { success: true, msg: "", user: users[0] };
-    } else {
-      return {
-        success: false,
-        msg: "Inserted however Find All method returned not 1 row.",
-        user: null
-      };
-    }
+    const user = await User.findByPk(newId);
+    return { success: true, msg: "", user };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       msg: `Failed to create user.  Reason: ${error}`,
