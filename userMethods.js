@@ -5,7 +5,7 @@ const { uuid } = require("uuidv4");
 function getUtcNow() {
   return moment()
     .utc()
-    .format();
+    .format("x");
 }
 
 async function getUsers() {
