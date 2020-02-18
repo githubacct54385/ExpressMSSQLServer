@@ -1,24 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { uuid } = require("uuidv4");
 const { check, validationResult } = require("express-validator");
-const moment = require("moment");
-
-const { sequelize, User } = require("../../sequelize");
-
-async function getUsers() {
-  try {
-    // connect and auth
-    await sequelize.authenticate();
-
-    // get all users
-    const users = await User.findAll();
-
-    return { success: true, error: "", users };
-  } catch (error) {
-    return { success: false, error, users: [] };
-  }
-}
+const { addUser, getUsers } = require("../../userMethods");
 
 // @route       GET api/users
 // @desc        Get all Users
@@ -30,26 +13,6 @@ router.get("/", async (req, res) => {
   }
   return res.json(response);
 });
-
-async function addUser(name, email) {
-  try {
-    // add user
-    await User.create({
-      Id: uuid(),
-      Name: name,
-      Email: email,
-      CreatedAt: moment()
-        .utc()
-        .format(),
-      UpdatedAt: moment()
-        .utc()
-        .format()
-    });
-    return { success: true, msg: "" };
-  } catch (error) {
-    return { success: false, msg: `Failed to create user.  Reason: ${error}` };
-  }
-}
 
 // @route       POST api/users
 // @desc        Create a User
